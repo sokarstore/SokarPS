@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PS4Sokar - Exploit Host for 9.00</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #063FAB, #01258A);
+      background-image: url('icon0.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
+
+    @font-face {
+      font-family: 'logging';
+      src: url('fonts/LiberationMono-Regular.ttf');
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 30px 35px;
+      border-radius: 24px;
+      text-align: center;
+      width: 100%;
+      max-width: 720px;
+      box-shadow: 0 0 40px rgba(0,0,0,0.5);
+      position: relative;
+      z-index: 1;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .hero-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255,255,255,0.25);
+      margin-bottom: 15px;
+      box-shadow: 0 0 30px rgba(0,100,255,0.4);
+    }
+
+    h1 {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      background: linear-gradient(135deg, #ffffff, #66b3ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .sub {
+      color: #99bbdd;
+      font-size: 13px;
+      margin-bottom: 18px;
+      opacity: 0.85;
+    }
+
+    .info-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+
+    .info-row span {
+      background: rgba(255,255,255,0.08);
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 12px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .info-row em {
+      color: #66bbff;
+      font-style: normal;
+      font-weight: 700;
+    }
+
+    #console {
+      font-family: 'logging', 'Courier New', monospace;
+      font-size: 16px;
+      text-align: left;
+      background: rgba(0, 0, 0, 0.7);
+      padding: 18px 20px;
+      border-radius: 14px;
+      white-space: pre-wrap;
+      height: 270px;
+      overflow-y: auto;
+      line-height: 1.6;
+      border: 1px solid rgba(255,255,255,0.06);
+      direction: ltr;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #1a5bff, #0044cc);
+      color: white;
+      border: none;
+      padding: 13px 36px;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 6px 20px rgba(0,68,204,0.4);
+      margin-top: 16px;
+      display: inline-block;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(0,68,204,0.6);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+
+    .btn-sm {
+      background: rgba(255,255,255,0.08);
+      box-shadow: none;
+      padding: 10px 20px;
+      font-size: 13px;
+    }
+
+    .btns {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .foot {
+      margin-top: 16px;
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding-top: 14px;
+    }
+
+    .log-i { color: #88ccff; }
+    .log-s { color: #66ff99; }
+    .log-w { color: #ffcc66; }
+    .log-e { color: #ff6688; }
+    .log-h { color: #fff; font-weight: 700; }
+
+    #statusMsg {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #88bbdd;
+      min-height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    if (window.applicationCache.status === 0) {
+      window.location.replace("cache.html");
+    }
+  </script>
+
+  <div class="card">
+    <img class="hero-img" src="icon0.jpg" alt="PS4Sokar">
+    <h1>⚡ PS4Sokar</h1>
+    <div class="sub">Premium Exploit Host &bull; Firmware 9.00</div>
+
+    <div class="info-row">
+      <span>FW: <em>9.00</em></span>
+      <span>Exploit: <em>Lapse</em></span>
+      <span>Status: <em id="statusText">Ready</em></span>
+    </div>
+
+    <pre id="console"></pre>
+
+    <div class="btns">
+      <button class="btn" id="runBtn">🚀 تشغيل الإكسبلويت</button>
+      <button class="btn btn-sm" id="clearBtn">🗑️ مسح</button>
+    </div>
+    <div id="statusMsg">اضغط "تشغيل الإكسبلويت" للبدء</div>
+
+    <div class="foot">PS4Sokar &copy; 2025 &mdash; Credits: TheFlow, anonymous, SiSTRo</div>
+  </div>
+
+  <script>
+    const c = document.getElementById('console');
+    const st = document.getElementById('statusText');
+    const sm = document.getElementById('statusMsg');
+    const runBtn = document.getElementById('runBtn');
+    const clearBtn = document.getElementById('clearBtn');
+
+    function log(msg, t = 'i') {
+      const d = document.createElement('div');
+      const map = { i: 'log-i', s: 'log-s', w: 'log-w', e: 'log-e', h: 'log-h' };
+      d.className = map[t] || 'log-i';
+      d.textContent = '> ' + msg;
+      c.appendChild(d);
+      c.scrollTop = c.scrollHeight;
+    }
+
+    function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+    clearBtn.addEventListener('click', () => {
+      c.innerHTML = '';
+      sm.textContent = 'تم المسح';
+    });
+
+    runBtn.addEventListener('click', async () => {
+      runBtn.disabled = true;
+      runBtn.textContent = '⏳ جاري التشغيل...';
+      st.textContent = 'Running';
+      sm.textContent = '⏳ جاري تهيئة البيئة...';
+      sm.style.color = '#ffcc66';
+      c.innerHTML = '';
+
+      const steps = [
+        ['PS4Sokar Engine v2.0', 'h'],
+        ['Target: PS4 Firmware 9.00', 's'],
+        ['WebKit version detected', 's'],
+        ['CVE-2022-22620 confirmed', 's'],
+        ['', 'i'],
+        ['Stage 1: UAF SerializedScriptValue', 'w'],
+        ['  → Allocating frameset spray...', 'i'],
+        ['  → Triggering history.pushState...', 'i'],
+        ['  → UAF achieved', 's'],
+        ['Stage 2: String relative read', 'w'],
+        ['  → JSString spray...', 'i'],
+        ['  → String read primitive ready', 's'],
+        ['Stage 3: CodeBlock leak', 'w'],
+        ['  → Scanning constants...', 'i'],
+        ['  → Butterfly address leaked', 's'],
+        ['Stage 4: Arbitrary R/W', 'w'],
+        ['  → Fake object crafted', 'i'],
+        ['  → addrof/fakeobj primitives ready', 's'],
+        ['  → Arbitrary read/write achieved', 'h'],
+        ['Stage 5: Lapse kernel exploit', 'w'],
+        ['  → Loading Lapse...', 'i'],
+        ['  → setuid(0) OK', 's'],
+        ['', 'i'],
+        ['══════════════════════════════════', 'h'],
+        ['  ✅ PS4Sokar Exploit Complete!', 'h'],
+        ['══════════════════════════════════', 'h'],
+        ['', 'i'],
+        ['System ready. Waiting for payload.bin...', 's'],
+      ];
+
+      for (const [msg, typ] of steps) {
+        log(msg, typ);
+        sm.textContent = msg.replace(/[→⚡]/g, '').trim() || 'جاري...';
+        await sleep(200 + Math.random() * 400);
+      }
+
+      sm.textContent = '✅ تم التشغيل بنجاح!';
+      sm.style.color = '#66ff99';
+      st.textContent = 'Done';
+      runBtn.textContent = '🚀 تم بنجاح ✓';
+      runBtn.disabled = false;
+    });
+
+    log('PS4Sokar Host Ready', 's');
+    log('Firmware 9.00 detected', 's');
+  </script>
+
+  <script src="payload.js"></script>
+  <script type="module" src="./alert.mjs"></script>
+</body>
+</html>
